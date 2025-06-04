@@ -26,7 +26,7 @@ function enviarMidia() {
   const formData = new FormData();
   formData.append("file", arquivoSelecionado);
 
-  fetch("https://script.google.com/macros/s/AKfycbzCvKFiZJEJG-364fXezLIcYTITwjKjMJc3agR2i3AuzrXNwJkf7eX1kxZN1qPvt6b9/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxcSM9jf8fJXlzf0-Ws2y_5pRlfAy7S4gKKAUqcC4YAB5xDyZt-QuA0Q8DO1Eku1Zk/exec", {
     method: "POST",
     body: formData
   })
