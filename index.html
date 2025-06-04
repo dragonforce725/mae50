@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeria - Rejane Nunes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Galeria</h1>
+    <h2 class="tema">A preta venceu!</h2>
+    <h2>Rejane Nunes</h2>
+    <p>Faça uma foto ou grave um vídeo para homenagear.</p>
+
+    <input type="file" id="fotoInput" accept="image/*" capture="environment" hidden />
+    <input type="file" id="videoInput" accept="video/*" capture="user" hidden />
+
+    <button class="btn foto" onclick="document.getElementById('fotoInput').click()">+ FOTO</button>
+    <button class="btn video" onclick="document.getElementById('videoInput').click()">+ VÍDEO</button>
+    <button class="btn enviar" onclick="enviarMidia()">Enviar</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

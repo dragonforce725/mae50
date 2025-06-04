@@ -1,0 +1,64 @@
+/* style.css */
+body {
+  background-repeat: repeat;
+  background-attachment: fixed;  
+  background-size: cover;
+  background-image: url('assets/fundo-rejane.png');
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  background-image: url('assets/fundo-rejane.png');
+  background-repeat: repeat;
+  background-attachment: fixed;  
+  background-size: cover;
+  text-align: center;
+  padding: 2em;
+  color: rgb(26, 27, 20);
+}
+
+h1 {
+  color: goldenrod;
+  font-size: 2em;
+}
+
+.tema {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  color: #004d00;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  color: #004d00;
+}
+
+p {
+  font-size: 1em;
+  margin-bottom: 1.5em;
+}
+
+.btn {
+  display: block;
+  width: 80%;
+  margin: 0.5em auto;
+  padding: 1em;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.foto, .video {
+  background-color: #006400;
+  color: white;
+}
+
+.enviar {
+  background-color: gold;
+  color: black;
+}
