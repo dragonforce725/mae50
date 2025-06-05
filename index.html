@@ -57,10 +57,10 @@
   <form method="POST" enctype="multipart/form-data" action="https://script.google.com/macros/s/AKfycbw2ZEbGySSgQ5DZwl1U6WyfDNHyd5IvvQprLrSEKbirf7er1SBP8uN7vDE-75-LYbgC/exec">
     <div class="button-container">
       <label for="photoInput">📸 Tirar uma Foto</label>
-      <input type="file" name="file" id="photoInput" accept="image/*" capture="environment" onchange="this.form.submit()">
+      <input type="file" id="photoInput" accept="image/*" capture="environment">
 
       <label for="videoInput">🎥 Gravar um Vídeo</label>
-      <input type="file" name="file" id="videoInput" accept="video/*" capture="user" onchange="this.form.submit()">
+      <input type="file" id="videoInput" accept="video/*" capture="user">
     </div>
   </form>
 </body>
