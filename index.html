@@ -4,64 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Preta Venceu - Rejane Nunes</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-      background-image: url('assets/fundo-rejane.png');
-    }
-    h1 {
-      font-size: 2rem;
-      color: gold;
-      margin-bottom: 1rem;
-    }
-    .subtitle {
-      font-size: 1.2rem;
-      color: #00ff00;
-      margin-bottom: 2rem;
-    }
-    .button-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    input[type="file"] {
-      display: none;
-    }
-    label {
-      background: gold;
-      color: black;
-      font-weight: bold;
-      padding: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    label:hover {
-      background: #ffd700;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Deixe sua homenagem para Rejane Nunes</h1>
-  <div class="subtitle">Tema: A preta venceu!</div>
+  <div class="container">
+    <h1>Deixe sua homenagem para Rejane Nunes</h1>
+    <div class="tema">Tema: A preta venceu!</div>
 
-  <form method="POST" enctype="multipart/form-data" action="https://script.google.com/macros/s/AKfycbw2ZEbGySSgQ5DZwl1U6WyfDNHyd5IvvQprLrSEKbirf7er1SBP8uN7vDE-75-LYbgC/exec">
     <div class="button-container">
-      <label for="photoInput">📸 Tirar uma Foto</label>
-      <input type="file" id="photoInput" accept="image/*" capture="environment">
+      <label for="photoInput" class="btn foto">📸 Tirar uma Foto</label>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" hidden>
 
-      <label for="videoInput">🎥 Gravar um Vídeo</label>
-      <input type="file" id="videoInput" accept="video/*" capture="user">
+      <label for="videoInput" class="btn video">🎥 Gravar um Vídeo</label>
+      <input type="file" id="videoInput" accept="video/*" capture="user" hidden>
     </div>
-  </form>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

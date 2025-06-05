@@ -1,18 +1,16 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycby03z_I8fGyRBUkn8jX0rxZWt9I48fAn69hwuw-lKSRaHDI8_s23cYOxWmGR7Y2HanV/exec'; // Cole a URL nova da Web App aqui
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxz0AXDP9MyJDYEdD6LxfdeicWTDgHW_YMHssy3YIOEpPWdymHbu5TXmGuRs2C06dY1/exec';
 
 function enviarArquivo(file) {
-  const reader = new FileReader();
-  reader.onload = function () {
-    const base64 = reader.result.split(',')[1];
-    fetch(scriptURL, {
-      method: 'POST',
-      body: base64
-    })
-    .then(response => response.text())
-    .then(result => alert(result))
-    .catch(error => alert('Erro: ' + error.message));
-  };
-  reader.readAsDataURL(file);
+  const formData = new FormData();
+  formData.append("file", file, file.name);
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.text())
+  .then(result => alert(result))
+  .catch(error => alert('Erro: ' + error.message));
 }
 
 document.getElementById('photoInput').addEventListener('change', function () {
