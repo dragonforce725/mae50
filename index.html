@@ -1,25 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>A Preta Venceu - Rejane Nunes</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Uploadcare Widget -->
+  <script>
+    UPLOADCARE_PUBLIC_KEY = '67b8f7724dd98bc550c2'; // substitua pela sua chave
+    UPLOADCARE_LOCALE = 'pt';
+    UPLOADCARE_TABS = 'camera file';
+    UPLOADCARE_INPUT_ACCEPT_TYPES = 'image/* video/*';
+  </script>
+  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('assets/fundo-rejane.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: gold;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #00ff00;
+      margin-bottom: 2rem;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .uploadcare--widget__button_type_open {
+      background: gold;
+      color: black;
+      font-weight: bold;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .uploadcare--widget__button_type_open:hover {
+      background: #ffd700;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Deixe sua homenagem para Rejane Nunes</h1>
-    <div class="tema">Tema: A preta venceu!</div>
 
-    <div class="button-container">
-      <label for="photoInput" class="btn foto">📸 Tirar uma Foto</label>
-      <input type="file" id="photoInput" accept="image/*" capture="environment" hidden>
+  <h1>Deixe sua homenagem para Rejane Nunes</h1>
+  <div class="subtitle">Tema: A preta venceu!</div>
 
-      <label for="videoInput" class="btn video">🎥 Gravar um Vídeo</label>
-      <input type="file" id="videoInput" accept="video/*" capture="user" hidden>
-    </div>
+  <div class="button-container">
+    <!-- Uploadcare File Inputs -->
+    <input
+      type="hidden"
+      role="uploadcare-uploader"
+      data-tabs="camera file"
+       data-images-only="true"
+       data-crop="1:1"
+       data-multiple="false"
+       name="file"
+    />
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(function(info) {
+      alert('Upload feito com sucesso!\nLink do arquivo:\n' + info.cdnUrl);
+      // Você pode salvar info.cdnUrl em um banco de dados ou enviar via webhook/email se desejar
+    });
+  </script>
+
 </body>
 </html>
