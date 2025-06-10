@@ -14,6 +14,30 @@
   </script>
   <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
+  <script>
+  uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(function(info) {
+    // Enviar para o webhook do Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbxzw99mNNzuMiXP4BRQLvC3aoKPh57PfqytKADcWhee_VdKuW8VcPhu10MGPnDppWo/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cdnUrl: info.cdnUrl,
+        fileName: info.name || 'homenagem_' + new Date().getTime()
+      })
+    })
+    .then(response => response.text())
+    .then(data => {
+      alert('Upload e salvamento concluídos com sucesso!');
+    })
+    .catch(error => {
+      alert('Upload feito, mas houve um erro ao salvar no Drive.');
+      console.error('Error:', error);
+    });
+  });
+</script>
+
   <style>
     body {
       margin: 0;
