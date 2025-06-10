@@ -3,40 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>A Preta Venceu - Rejane Nunes</title>
+  <title>A Preta Venceu</title>
 
   <!-- Uploadcare Widget -->
   <script>
-    UPLOADCARE_PUBLIC_KEY = '67b8f7724dd98bc550c2'; // substitua pela sua chave
+    UPLOADCARE_PUBLIC_KEY = '67b8f7724dd98bc550c2';
     UPLOADCARE_LOCALE = 'pt';
     UPLOADCARE_TABS = 'camera file';
     UPLOADCARE_INPUT_ACCEPT_TYPES = 'image/* video/*';
   </script>
   <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-
-  <script>
-  uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(function(info) {
-    // Enviar para o webhook do Apps Script
-    fetch('https://script.google.com/macros/s/AKfycbxzw99mNNzuMiXP4BRQLvC3aoKPh57PfqytKADcWhee_VdKuW8VcPhu10MGPnDppWo/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        cdnUrl: info.cdnUrl,
-        fileName: info.name || 'homenagem_' + new Date().getTime()
-      })
-    })
-    .then(response => response.text())
-    .then(data => {
-      alert('Upload e salvamento concluídos com sucesso!');
-    })
-    .catch(error => {
-      alert('Upload feito, mas houve um erro ao salvar no Drive.');
-      console.error('Error:', error);
-    });
-  });
-</script>
 
   <style>
     body {
@@ -45,6 +21,7 @@
       background-image: url('assets/fundo-rejane.png');
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       color: white;
       text-align: center;
       padding: 2rem;
@@ -54,18 +31,21 @@
       font-size: 2rem;
       color: gold;
       margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .subtitle {
       font-size: 1.2rem;
-      color: #00ff00;
+      color: #004d00;
       margin-bottom: 2rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
 
     .button-container {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
       max-width: 300px;
       margin: 0 auto;
     }
@@ -79,10 +59,44 @@
       border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
     }
 
     .uploadcare--widget__button_type_open:hover {
       background: #ffd700;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .instructions {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #ddd;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .type-selector {
+      margin-bottom: 1.5rem;
+    }
+
+    .type-btn {
+      background: rgba(0, 77, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .type-btn.active {
+      background: gold;
+      color: black;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -91,23 +105,97 @@
   <h1>Deixe sua homenagem para Rejane Nunes</h1>
   <div class="subtitle">Tema: A preta venceu!</div>
 
+  <div class="type-selector">
+    <button class="type-btn active" id="photoBtn">Enviar Foto</button>
+    <button class="type-btn" id="videoBtn">Enviar Vídeo</button>
+  </div>
+
   <div class="button-container">
-    <!-- Uploadcare File Inputs -->
+    <!-- Uploadcare File Input para Fotos -->
     <input
       type="hidden"
+      id="photoUploader"
       role="uploadcare-uploader"
       data-tabs="camera file"
-       data-images-only="true"
-       data-crop="1:1"
-       data-multiple="false"
-       name="file"
+      data-images-only="true"
+      data-crop="1:1"
+      data-multiple="false"
+      name="photo"
+    />
+
+    <!-- Uploadcare File Input para Vídeos (inicialmente oculto) -->
+    <input
+      type="hidden"
+      id="videoUploader"
+      role="uploadcare-uploader"
+      data-tabs="camera file"
+      data-video-only="true"
+      data-multiple="false"
+      name="video"
+      style="display: none;"
     />
   </div>
 
+  <div class="instructions">
+    <p><strong>Para fotos:</strong> Envie uma imagem quadrada (será cortada automaticamente)</p>
+    <p><strong>Para vídeos:</strong> Grave uma mensagem em vídeo de até 3 minutos</p>
+  </div>
+
   <script>
-    uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(function(info) {
-      alert('Upload feito com sucesso!\nLink do arquivo:\n' + info.cdnUrl);
-      // Você pode salvar info.cdnUrl em um banco de dados ou enviar via webhook/email se desejar
+    // Alternar entre foto e vídeo
+    const photoBtn = document.getElementById('photoBtn');
+    const videoBtn = document.getElementById('videoBtn');
+    const photoUploader = document.getElementById('photoUploader');
+    const videoUploader = document.getElementById('videoUploader');
+
+    photoBtn.addEventListener('click', () => {
+      photoBtn.classList.add('active');
+      videoBtn.classList.remove('active');
+      photoUploader.style.display = 'block';
+      videoUploader.style.display = 'none';
+    });
+
+    videoBtn.addEventListener('click', () => {
+      videoBtn.classList.add('active');
+      photoBtn.classList.remove('active');
+      videoUploader.style.display = 'block';
+      photoUploader.style.display = 'none';
+    });
+
+    // Configuração dos widgets
+    const photoWidget = uploadcare.Widget('#photoUploader');
+    const videoWidget = uploadcare.Widget('#videoUploader');
+
+    // Função comum para enviar para o Google Drive
+    function sendToDrive(info) {
+      fetch('https://script.google.com/macros/s/AKfycbxzw99mNNzuMiXP4BRQLvC3aoKPh57PfqytKADcWhee_VdKuW8VcPhu10MGPnDppWo/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cdnUrl: info.cdnUrl,
+          fileName: info.name || 'homenagem_' + new Date().getTime(),
+          type: info.isImage ? 'photo' : 'video'
+        })
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert('Sua homenagem foi enviada com sucesso! Obrigado!');
+      })
+      .catch(error => {
+        alert('Upload concluído, mas houve um erro ao salvar no Drive.');
+        console.error('Error:', error);
+      });
+    }
+
+    // Eventos de upload concluído
+    photoWidget.onUploadComplete(function(info) {
+      sendToDrive(info);
+    });
+
+    videoWidget.onUploadComplete(function(info) {
+      sendToDrive(info);
     });
   </script>
 
